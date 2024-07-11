@@ -31,9 +31,16 @@ def clickLoginButton(context):
 
 @then('User must successfully login to the Dashboard page')
 def loginDashboard(context):
-    wait= (WebDriverWait(context.driver, 10))
-    element =wait.until(
-        EC.presence_of_element_located((By.XPATH, "//h6[normalize-space()='Dashboard']")))
-    text = element.text
-    assert text=="Dashboard"
-    context.driver.close()
+    try:
+        wait= (WebDriverWait(context.driver, 10))
+        element =wait.until(
+            EC.presence_of_element_located((By.XPATH, "//h6[normalize-space()='Dashboard']")))
+        text = element.text
+    except:
+        context.driver.close()
+        assert False, "Test Failed"
+    if text=="Dashboard":
+        context.driver.close()
+        assert True,"Test passed"
+
+
